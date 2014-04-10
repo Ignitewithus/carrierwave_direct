@@ -76,9 +76,9 @@ module CarrierWaveDirect
       false
     end
 
-    def key
+    def key(new=false)
       return @key if @key.present?
-      if present?
+      if present? && !new
         self.key = URI.parse(URI.encode(url, " []+()")).path[1 .. -1] # explicitly set key
       else
         @key = "#{store_dir}/#{guid}/#{FILENAME_WILDCARD}"
@@ -130,6 +130,10 @@ module CarrierWaveDirect
       new_key_parts.pop
       new_key_parts << fname
       self.key = new_key_parts.join("/")
+    end
+
+    def new_key
+
     end
 
     # Update the versions to use this key
